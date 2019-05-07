@@ -8,39 +8,65 @@ import os
 import csv
 import deepdish as dd
 import time
-
+import json
 
 from mintsXU4 import mintsDefinitions as mD
 
 dataFolder = mD.dataFolder
+macAddress = mD.macAddress
+#
+# def writeHDF5Latest(writePath,sensorDictionary,sensorName):
+#     try:
+#         dd.io.save(dataFolder+sensorName+".h5", sensorDictionary)
+#     except:
+#         print("Data Conflict!")
 
 
-def writeHDF5Latest(writePath,sensorDictionary,sensorName):
+def writeJSONLatest(sensorDictionary,sensorName):
+    # print(writePath)
+    directoryIn  = dataFolder+"/"+macAddress+"/"+sensorName+".json"
+    # print(directoryIn)
     try:
-        dd.io.save(dataFolder+sensorName+".h5", sensorDictionary)
+    	with open(directoryIn,'w') as fp:
+    	    json.dump(sensorDictionary, fp)
     except:
         print("Data Conflict!")
 
-def readHDF5LatestAll(sensorName):
+def readJSONLatestAll(sensorName):
     try:
-        d = dd.io.load(dataFolder+sensorName+".h5")
-        # print("-------------------------------------")
-        # # print(sensorName)
-        # # print(d)
+        directoryIn  = dataFolder+"/"+macAddress+"/"+sensorName+".json"
+        with open(directoryIn, 'r') as myfile:
+            # dataRead=myfile.read()
+            dataRead=json.load(myfile)
+
         time.sleep(0.01)
-        return d, True
+        return dataRead, True
     except:
         print("Data Conflict!")
         return "NaN", False
 
-def readHDF5LatestData(sensorName,keyIn):
-    try:
-        d = dd.io.load(dataFolder+sensorName+".h5")
-        # print("-------------------------------------")
-        # print(sensorName)
-        # print(d[keyIn])
-        time.sleep(0.01)
-        return str(d[keyIn]),True
-    except:
-        print("Data Conflict!")
-        return {}, False
+
+#
+# def readHDF5LatestAll(sensorName):
+#     try:
+#         d = dd.io.load(dataFolder+sensorName+".h5")
+#         # print("-------------------------------------")
+#         # # print(sensorName)
+#         # # print(d)
+#         time.sleep(0.01)
+#         return d, True
+#     except:
+#         print("Data Conflict!")
+#         return "NaN", False
+#
+# def readHDF5LatestData(sensorName,keyIn):
+#     try:
+#         d = dd.io.load(dataFolder+sensorName+".h5")
+#         # print("-------------------------------------")
+#         # print(sensorName)
+#         # print(d[keyIn])
+#         time.sleep(0.01)
+#         return str(d[keyIn]),True
+#     except:
+#         print("Data Conflict!")
+#         return {}, False

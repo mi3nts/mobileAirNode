@@ -28,9 +28,9 @@ from collections import OrderedDict
 import netifaces as ni
 
 
-macAddress    = mD.macAddress
-dataFolder    = mD.dataFolder
-latestOff     = mD.latestOff
+macAddress        = mD.macAddress
+dataFolder        = mD.dataFolder
+latestDisplayOn     = mD.latestDisplayOn
 
 
 
@@ -40,9 +40,10 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     writePath = getWritePath(sensorName,dateTime)
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
-    print(writePath)
-    if(not(latestOff)):
-       mL.writeHDF5Latest(writePath,sensorDictionary,sensorName)
+    if(latestDisplayOn):
+       print("writePath in Latest ")
+       print(writePath)
+       mL.writeJSONLatest(sensorDictionary,sensorName)
 
     print("-----------------------------------")
     print(sensorName)
@@ -55,7 +56,7 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
     if(not(latestOff)):
-       mL.writeHDF5Latest(writePath,sensorDictionary,sensorName)
+       mL.writeJSONLatest(writePath,sensorDictionary,sensorName)
 
     print("-----------------------------------")
     print(sensorName)
