@@ -55,7 +55,7 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     if(latestDisplayOn):
        print("writePath in Latest ")
        print(writePath)
-       mL.writeJSONLatest(writePath,sensorDictionary,sensorName)
+       mL.writeJSONLatest(sensorDictionary,sensorName)
 
     print("-----------------------------------")
     print(sensorName)
