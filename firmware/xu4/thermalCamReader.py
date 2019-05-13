@@ -99,16 +99,8 @@ def main():
             print("Minimum Temperature Location Y:"+ str(minLocation[1]))
             print(" ")
             print("============== MINTS Thermal ==============")
-            print(type(dataCelcius))
-            print(dataCelcius.shape)
-            print(" ")
-            print("============== MINTS Thermal ==============")
-            print(" ")
             time.sleep(1)
-            print(" ")
-            print("============== MINTS Thermal ==============")
-            print(" ")
-
+         
       finally:
         libuvc.uvc_stop_streaming(devh)
       #
