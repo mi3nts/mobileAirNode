@@ -26,14 +26,11 @@ import serial
 import pynmea2
 from collections import OrderedDict
 import netifaces as ni
-
+from scipy.io import savemat
 
 macAddress        = mD.macAddress
 dataFolder        = mD.dataFolder
 latestDisplayOn     = mD.latestDisplayOn
-
-
-
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
     #Getting Write Path
@@ -61,6 +58,15 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     print("-----------------------------------")
     print(sensorName)
     print(sensorDictionary)
+
+def sensorFinisherThermal(dateTime,sensorName,sensorDictionary,dataCelcius):
+    writePath = getWritePathThermal(sensorName,dateTime)
+    exists = directoryCheck(writePath)
+    savemat(writePath, {"thermalImage":dataCelcius,"thermalSummary":sensorDictionary})
+    print("-----------------------------------")
+    print(sensorName)
+    print(sensorDictionary)
+
 
 def dataSplit(dataString,dateTime):
     dataOut   = dataString.split('!')
@@ -112,6 +118,7 @@ def sensorSend(sensorID,sensorData,dateTime):
         INA219Write(sensorData,dateTime)
     if(sensorID=="PPD42NS"):
         PPD42NSWrite(sensorData,dateTime)
+
 
 def BME280Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
@@ -518,11 +525,18 @@ def getWritePathSnaps(labelIn,dateTime):
     return writePath;
 
 
+def getWritePathThermal(labelIn,dateTime):
+    #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
+    writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+"/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2) +".mat"
+    return writePath;
+
 
 def getWritePath(labelIn,dateTime):
     #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
     writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+"/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2) +".csv"
     return writePath;
+
+
 
 def getListDictionaryFromPath(dirPath):
     print("Reading : "+ dirPath)

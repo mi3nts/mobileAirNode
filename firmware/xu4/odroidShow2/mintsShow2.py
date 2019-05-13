@@ -38,6 +38,7 @@ def main():
     temperature= preVal
     humidity= preVal
     pressure= preVal
+    maxTemperature = preVal
 
     printEmpty()
     printIntro()
@@ -57,10 +58,14 @@ def main():
              humidity    = BME280['humidity']
              pressure    = BME280['pressure']
 
+        FLIR001,valid    = mL.readJSONLatestAll("FLIR001")
+        if(valid):
+             # print(FLIR001)
+             maxTemperature = str(FLIR001['maxTemperature'])
+             minTemperature = str(FLIR001['minTemperature'])
 
-        # time.sleep(1)
 
-        printData(pm1,pm2_5,pm10,temperature,pressure,humidity)
+        printData(pm1,pm2_5,pm10,temperature,pressure,humidity,maxTemperature,minTemperature)
 
 def printEmpty():
     ctx.fg_color(Screen.RED).write("").home()
@@ -103,11 +108,10 @@ def printIntro():
     ctx.fg_color(Screen.WHITE).write("----------MINTS----------").linebreak()
     ctx.fg_color(Screen.WHITE).write("").home()
 
-def printData(pm1,pm2_5,pm10,temperature,pressure,humidity):
+def printData(pm1,pm2_5,pm10,temperature,pressure,humidity,maxTemperature,minTemperature):
 
     ctx.fg_color(Screen.RED).write("").home()
     ctx.fg_color(Screen.WHITE).write("----------MINTS----------").linebreak()
-    ctx.fg_color(Screen.WHITE).write("                         ").linebreak()
     ctx.fg_color(Screen.WHITE).write("PM1  :" + pm1).linebreak()
     ctx.fg_color(Screen.WHITE).write("PM2.5:" + pm2_5).linebreak()
     ctx.fg_color(Screen.WHITE).write("PM10 :" + pm10).linebreak()
@@ -115,11 +119,12 @@ def printData(pm1,pm2_5,pm10,temperature,pressure,humidity):
     ctx.fg_color(Screen.WHITE).write("Temperature: "+ temperature+ "C").linebreak()
     ctx.fg_color(Screen.WHITE).write("Pressure   : "+ pressure   +  "Pa").linebreak()
     ctx.fg_color(Screen.WHITE).write("Humidity   : "+ humidity   +  "%").linebreak()
-    ctx.fg_color(Screen.WHITE).write("                         ").linebreak()
+    ctx.fg_color(Screen.WHITE).write("-------------------------").linebreak()
+    ctx.fg_color(Screen.WHITE).write("Maximum Temp: "+ maxTemperature+ "C").linebreak()
+    ctx.fg_color(Screen.WHITE).write("Minimum Temp: "+ minTemperature+ "C").linebreak()
     ctx.fg_color(Screen.WHITE).write("-------------------------").linebreak()
     ctx.fg_color(Screen.WHITE).write("ID:"+macAddress).linebreak()
     ctx.fg_color(Screen.WHITE).write(time.strftime('%X %x %Z')).linebreak()
-    ctx.fg_color(Screen.WHITE).write("                         ").linebreak()
     ctx.fg_color(Screen.WHITE).write("----------MINTS----------").linebreak()
     ctx.fg_color(Screen.WHITE).write("").home()
 
