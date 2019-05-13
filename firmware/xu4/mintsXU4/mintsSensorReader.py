@@ -52,7 +52,9 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
-    if(not(latestOff)):
+    if(latestDisplayOn):
+       print("writePath in Latest ")
+       print(writePath)
        mL.writeJSONLatest(writePath,sensorDictionary,sensorName)
 
     print("-----------------------------------")
