@@ -6,8 +6,6 @@ import numpy as np
 import pickle
 from skimage import io, color
 import cv2
-import h5py
-# import hdf5storage
 import json
 from collections import OrderedDict
 try:

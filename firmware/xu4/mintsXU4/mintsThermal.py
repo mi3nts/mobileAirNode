@@ -9,7 +9,7 @@ except ImportError:
   from Queue import Queue
 import platform
 
-libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/src/libuvc.so")
+libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/build/libuvc.so")
 
 BUF_SIZE = 2
 q = Queue(BUF_SIZE)
