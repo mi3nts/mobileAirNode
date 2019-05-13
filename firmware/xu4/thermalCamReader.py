@@ -68,39 +68,45 @@ def main():
         exit(1)
 
       try:
-        data = q.get(True, 500)
-        dateTime = datetime.datetime.now()
+        while True:
+          try:
+            data = q.get(True, 500)
+            dateTime = datetime.datetime.now()
 
-        if data is not None:
+            if data is not None:
 
-            dataKelvin  = cv2.resize(data[:,:], (640, 480))
-            dataCelcius = ktoc(dataKelvin)
-            minCelcius, maxCelcius, minLocation, maxLocation = cv2.minMaxLoc(dataCelcius)
-            sensorDictionary =  OrderedDict([
-                ("dateTime"     , str(dateTime)),
-        		("maxTemperature"  ,maxCelcius),
-                ("minTemperature"  ,minCelcius),
-            	("maxTempLocX"     ,maxLocation[0]),
-                ("maxTempLocY"     ,maxLocation[1]),
-            	("minTempLocX"     ,minLocation[0]),
-                ("minTempLocY"     ,minLocation[1])
-                ])
+                dataKelvin  = cv2.resize(data[:,:], (640, 480))
+                dataCelcius = ktoc(dataKelvin)
+                minCelcius, maxCelcius, minLocation, maxLocation = cv2.minMaxLoc(dataCelcius)
+                sensorDictionary =  OrderedDict([
+                    ("dateTime"     , str(dateTime)),
+                ("maxTemperature"  ,maxCelcius),
+                    ("minTemperature"  ,minCelcius),
+                  ("maxTempLocX"     ,maxLocation[0]),
+                    ("maxTempLocY"     ,maxLocation[1]),
+                  ("minTempLocX"     ,minLocation[0]),
+                    ("minTempLocY"     ,minLocation[1])
+                    ])
 
-            mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
-            mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelcius)
-            print(" ")
-            print("============== MINTS Thermal ==============")
-            print(" ")
-            print("Maximum Temperature Read:"+ str(maxCelcius))
-            print("Maximum Temperature Location X:"+ str(maxLocation[0]))
-            print("Maximum Temperature Location Y:"+ str(maxLocation[1]))
-            print("Minimum Temperature Read:" + str(minCelcius))
-            print("Minimum Temperature Location X:"+ str(minLocation[0]))
-            print("Minimum Temperature Location Y:"+ str(minLocation[1]))
-            print(" ")
-            print("============== MINTS Thermal ==============")
-            time.sleep(1)
-         
+                mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
+                mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelcius)
+                print(" ")
+                print("============== MINTS Thermal ==============")
+                print(" ")
+                print("Maximum Temperature Read:"+ str(maxCelcius))
+                print("Maximum Temperature Location X:"+ str(maxLocation[0]))
+                print("Maximum Temperature Location Y:"+ str(maxLocation[1]))
+                print("Minimum Temperature Read:" + str(minCelcius))
+                print("Minimum Temperature Location X:"+ str(minLocation[0]))
+                print("Minimum Temperature Location Y:"+ str(minLocation[1]))
+                print(" ")
+                print("============== MINTS Thermal ==============")
+                time.sleep(5)
+                
+          except:
+            time.sleep(10)
+            print("Thermal Loop Not Read")
+            
       finally:
         libuvc.uvc_stop_streaming(devh)
       #
