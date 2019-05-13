@@ -1,3 +1,7 @@
+# Adopted from
+# https://github.com/groupgets/purethermal1-uvc-capture
+
+
 from ctypes import *
 import platform
 import time
@@ -14,11 +18,6 @@ libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/build/libuvc.so") # For Odroid 
 
 BUF_SIZE = 2
 q = Queue(BUF_SIZE)
-
-# Adopted from
-# https://github.com/groupgets/purethermal1-uvc-capture
-
-
 
 class uvc_context(Structure):
   _fields_ = [("usb_ctx", c_void_p),
@@ -306,26 +305,3 @@ def display_temperature(img, val_k, loc, color):
   x, y = loc
   cv2.line(img, (x - 2, y), (x + 2, y), color, 1)
   cv2.line(img, (x, y - 2), (x, y + 2), color, 1)
-
-
-
-
-
-
-
-
-
-# ***************************************************************************
-#  mintsThermal.py
-#   ---------------------------------
-#   Written by: Lakitha Omal Harindha Wijeratne
-#   - for -
-#   Mints: Multi-scale Integrated Sensing and Simulation
-#   ---------------------------------
-#   Date: May 9th, 2019
-#   ---------------------------------
-#   This module is written for reading purethermal2 camera data
-#   --------------------------------------------------------------------------
-#   https://github.com/mi3nts
-#   http://utdmints.info/
-#  ***************************************************************************
