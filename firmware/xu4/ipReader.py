@@ -20,8 +20,8 @@ def main():
     dateTimeNow = datetime.datetime.now()
     
     publicIp = get('https://api.ipify.org').text
-    localIp  = ni.ifaddresses('docker0')[ni.AF_INET][0]['addr'] # Lab Machine
-    # ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+    #localIp  = ni.ifaddresses('docker0')[ni.AF_INET][0]['addr'] # Lab Machine
+    localIp = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr'] # Odroid XU4 
 
     sensorDictionary =  OrderedDict([
             ("dateTime"     , str(dateTimeNow)),
