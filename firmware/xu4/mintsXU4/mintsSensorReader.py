@@ -14,6 +14,7 @@
 #  ***************************************************************************
 
 import serial
+import hdf5storage
 import datetime
 import os
 import csv
@@ -25,6 +26,7 @@ import time
 import serial
 import pynmea2
 from collections import OrderedDict
+import numpy as np
 import netifaces as ni
 from scipy.io import savemat
 
@@ -64,11 +66,26 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
 def sensorFinisherThermal(dateTime,sensorName,sensorDictionary,dataCelcius):
     writePath = getWritePathThermal(sensorName,dateTime)
     exists = directoryCheck(writePath)
-    savemat(writePath, {"thermalImage":dataCelcius,"thermalSummary":sensorDictionary})
+    print(writePath)
+    flir001 = {}
+    flir001['thermalImage'] = dataCelcius
+    hdf5storage.write(flir001, '.', writePath, store_python_metadata=False, matlab_compatible=True)
+
     print("-----------------------------------")
     print(sensorName)
     print(sensorDictionary)
 
+
+def getWritePathThermal(labelIn,dateTime):
+    #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
+    writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + \
+    "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+  \
+    "/thermalSnaps/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + \
+    str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2)+\
+    str(dateTime.hour).zfill(2) + "_" +str(dateTime.minute).zfill(2) + "_" +str(dateTime.second).zfill(2)\
+     +".mat"
+
+    return writePath;
 
 def dataSplit(dataString,dateTime):
     dataOut   = dataString.split('!')
@@ -526,11 +543,6 @@ def getWritePathSnaps(labelIn,dateTime):
     writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+"/snaps/MINTS_"+ macAddress+ "_" +labelIn + "_" + str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2) + "_" +str(dateTime.hour).zfill(2) + "_" +str(dateTime.minute).zfill(2)+ "_" +str(dateTime.second).zfill(2) +".png"
     return writePath;
 
-
-def getWritePathThermal(labelIn,dateTime):
-    #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
-    writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+"/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2) +".mat"
-    return writePath;
 
 
 def getWritePath(labelIn,dateTime):

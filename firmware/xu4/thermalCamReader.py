@@ -1,4 +1,5 @@
 from datetime import timezone
+import hdf5storage
 import time
 import os
 import datetime
@@ -14,7 +15,8 @@ except ImportError:
   from Queue import Queue
 import platform
 
-
+import matplotlib.pyplot as plt
+from PIL import Image
 from mintsXU4 import mintsSkyCamReader as mSCR
 from mintsXU4 import mintsSensorReader as mSR
 from mintsXU4 import mintsDefinitions as mD
@@ -68,45 +70,54 @@ def main():
         exit(1)
 
       try:
+        startTime = time.time()
         while True:
-          try:
+          # try:
             data = q.get(True, 500)
             dateTime = datetime.datetime.now()
 
             if data is not None:
 
-                dataKelvin  = cv2.resize(data[:,:], (640, 480))
-                dataCelcius = ktoc(dataKelvin)
-                minCelcius, maxCelcius, minLocation, maxLocation = cv2.minMaxLoc(dataCelcius)
-                sensorDictionary =  OrderedDict([
-                    ("dateTime"     , str(dateTime)),
-                ("maxTemperature"  ,maxCelcius),
-                    ("minTemperature"  ,minCelcius),
-                  ("maxTempLocX"     ,maxLocation[0]),
-                    ("maxTempLocY"     ,maxLocation[1]),
-                  ("minTempLocX"     ,minLocation[0]),
-                    ("minTempLocY"     ,minLocation[1])
-                    ])
+                dataKelvin            = cv2.resize(data[:,:], (640, 480))
+                minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(dataKelvin)
+                img = raw_to_8bit(dataKelvin)
+                displayTemperatureInCelcius(img, minVal, minLoc, (255, 0, 0))
+                displayTemperatureInCelcius(img, maxVal, maxLoc, (0, 0, 255))
+                cv2.imshow('MINTS Thermal', img)
+                cv2.waitKey(1)
 
-                mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
-                mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelcius)
-                print(" ")
-                print("============== MINTS Thermal ==============")
-                print(" ")
-                print("Maximum Temperature Read:"+ str(maxCelcius))
-                print("Maximum Temperature Location X:"+ str(maxLocation[0]))
-                print("Maximum Temperature Location Y:"+ str(maxLocation[1]))
-                print("Minimum Temperature Read:" + str(minCelcius))
-                print("Minimum Temperature Location X:"+ str(minLocation[0]))
-                print("Minimum Temperature Location Y:"+ str(minLocation[1]))
-                print(" ")
-                print("============== MINTS Thermal ==============")
-                time.sleep(5)
-                
-          except:
-            time.sleep(10)
-            print("Thermal Loop Not Read")
-            
+                if((time.time()-startTime)>10):
+                    startTime = time.time()
+                    dataCelcius           = ktoc(dataKelvin)
+                    dataCelciusMultiplied = kelvinToCelcius(dataKelvin)
+                    minCelcius, maxCelcius, minLocation, maxLocation = cv2.minMaxLoc(dataCelcius)
+                    sensorDictionary =  OrderedDict([
+                        ("dateTime"     , str(dateTime)),
+                        ("maxTemperature"  ,maxCelcius),
+                        ("minTemperature"  ,minCelcius),
+                        ("maxTempLocX"     ,maxLocation[0]),
+                        ("maxTempLocY"     ,maxLocation[1]),
+                        ("minTempLocX"     ,minLocation[0]),
+                        ("minTempLocY"     ,minLocation[1])
+                        ])
+                    mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
+                    mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelciusMultiplied)
+                    print(" ")
+                    print("============== MINTS Thermal ==============")
+                    print(" ")
+                    print("Maximum Temperature Read:"+ str(maxCelcius))
+                    print("Maximum Temperature Location X:"+ str(maxLocation[0]))
+                    print("Maximum Temperature Location Y:"+ str(maxLocation[1]))
+                    print("Minimum Temperature Read:" + str(minCelcius))
+                    print("Minimum Temperature Location X:"+ str(minLocation[0]))
+                    print("Minimum Temperature Location Y:"+ str(minLocation[1]))
+                    print(" ")
+                    print("============== MINTS Thermal ==============")
+          # #
+          # except:
+          #   time.sleep(10)
+          #   print("Thermal Loop Not Read")
+
       finally:
         libuvc.uvc_stop_streaming(devh)
       #
