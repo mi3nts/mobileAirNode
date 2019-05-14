@@ -72,7 +72,7 @@ def main():
       try:
         startTime = time.time()
         while True:
-          # try:
+          try:
             data = q.get(True, 500)
             dateTime = datetime.datetime.now()
 
@@ -112,9 +112,9 @@ def main():
                     print(" ")
                     print("============== MINTS Thermal ==============")
           # #
-          # except:
-          #   time.sleep(10)
-          #   print("Thermal Loop Not Read")
+          except:
+            time.sleep(10)
+            print("Thermal Loop Not Read")
 
       finally:
         libuvc.uvc_stop_streaming(devh)

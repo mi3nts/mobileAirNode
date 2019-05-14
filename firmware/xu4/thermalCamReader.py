@@ -72,7 +72,7 @@ def main():
       try:
         startTime = time.time()
         while True:
-          # try:
+          try:
             data = q.get(True, 500)
             dateTime = datetime.datetime.now()
 
@@ -80,11 +80,11 @@ def main():
 
                 dataKelvin            = cv2.resize(data[:,:], (640, 480))
                 minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(dataKelvin)
-                img = raw_to_8bit(dataKelvin)
-                displayTemperatureInCelcius(img, minVal, minLoc, (255, 0, 0))
-                displayTemperatureInCelcius(img, maxVal, maxLoc, (0, 0, 255))
-                cv2.imshow('MINTS Thermal', img)
-                cv2.waitKey(1)
+                # img = raw_to_8bit(dataKelvin)
+                # displayTemperatureInCelcius(img, minVal, minLoc, (255, 0, 0))
+                # displayTemperatureInCelcius(img, maxVal, maxLoc, (0, 0, 255))
+                # cv2.imshow('MINTS Thermal', img)
+                # cv2.waitKey(1)
 
                 if((time.time()-startTime)>10):
                     startTime = time.time()
@@ -111,10 +111,10 @@ def main():
                     print("Minimum Temperature Location Y:"+ str(minLoc[1]))
                     print(" ")
                     print("============== MINTS Thermal ==============")
-          # #
-          # except:
-          #   time.sleep(10)
-          #   print("Thermal Loop Not Read")
+          #
+          except:
+            time.sleep(10)
+            print("Thermal Loop Not Read")
 
       finally:
         libuvc.uvc_stop_streaming(devh)
