@@ -6,8 +6,8 @@ sleep 5
 python3 nanoReader1.py &
 # sleep 5
 # python3 nanoReader2.py &
-# sleep 5
-# python3 GPSReader.py &
+sleep 5
+python3 thermalCamReader.py &
 sleep 5
 python3 ipReader.py &
 sleep 10
