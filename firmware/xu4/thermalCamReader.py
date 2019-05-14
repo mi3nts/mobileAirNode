@@ -90,7 +90,6 @@ def main():
                     startTime = time.time()
                     dataCelcius           = ktoc(dataKelvin)
                     print(dataCelcius)
-                    print(dataCelcius)
                     dataCelciusMultiplied = kelvinToCelcius(dataKelvin)
                     minCelcius, maxCelcius, minLocation, maxLocation = cv2.minMaxLoc(dataCelcius)
                     sensorDictionary =  OrderedDict([
