@@ -40,8 +40,6 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
     if(latestDisplayOn):
-       print("writePath in Latest ")
-       print(writePath)
        mL.writeJSONLatest(sensorDictionary,sensorName)
 
     print("-----------------------------------")
@@ -66,14 +64,10 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
 def sensorFinisherThermal(dateTime,sensorName,sensorDictionary,dataCelcius):
     writePath = getWritePathThermal(sensorName,dateTime)
     exists = directoryCheck(writePath)
-    print(writePath)
     flir001 = {}
     flir001['thermalImage'] = dataCelcius
     hdf5storage.write(flir001, '.', writePath, store_python_metadata=False, matlab_compatible=True)
 
-    print("-----------------------------------")
-    print(sensorName)
-    print(sensorDictionary)
 
 
 def getWritePathThermal(labelIn,dateTime):
