@@ -297,6 +297,10 @@ def ktoc(val):
 def kelvinToCelcius(val):
   return (val - 27315)
 
+def kelvinToCelciusActual(val):
+  return (val - 27315) / 100
+
+
 def raw_to_8bit(data):
   cv2.normalize(data, data, 0, 65535, cv2.NORM_MINMAX)
   np.right_shift(data, 8, data)

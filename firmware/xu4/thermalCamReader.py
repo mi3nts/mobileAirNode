@@ -88,19 +88,14 @@ def main():
 
                 if((time.time()-startTime)>10):
                     startTime = time.time()
-                    print(dataKelvin)
-                    dataCelcius           = ktoc(dataKelvin)
-                    print(dataCelcius)
-                    dataCelciusMultiplied = kelvinToCelcius(dataKelvin)
-                    minCelcius, maxCelcius, minLocation, maxLocation = cv2.minMaxLoc(dataCelcius)
                     sensorDictionary =  OrderedDict([
                         ("dateTime"     , str(dateTime)),
-                        ("maxTemperature"  ,maxCelcius),
-                        ("minTemperature"  ,minCelcius),
-                        ("maxTempLocX"     ,maxLocation[0]),
-                        ("maxTempLocY"     ,maxLocation[1]),
-                        ("minTempLocX"     ,minLocation[0]),
-                        ("minTempLocY"     ,minLocation[1])
+                        ("maxTemperature"  ,ktoc(maxVal)),
+                        ("minTemperature"  ,ktoc(minVal)),
+                        ("maxTempLocX"     ,maxLoc[0]),
+                        ("maxTempLocY"     ,maxLoc[1]),
+                        ("minTempLocX"     ,minLoc[0]),
+                        ("minTempLocY"     ,minLoc[1])
                         ])
                     mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
                     mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelciusMultiplied)
