@@ -88,6 +88,7 @@ def main():
 
                 if((time.time()-startTime)>10):
                     startTime = time.time()
+                    dataCelciusMultiplied = kelvinToCelcius(dataKelvin)
                     sensorDictionary =  OrderedDict([
                         ("dateTime"     , str(dateTime)),
                         ("maxTemperature"  ,ktoc(maxVal)),
