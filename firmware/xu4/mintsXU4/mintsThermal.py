@@ -292,7 +292,7 @@ def ktof(val):
   return (1.8 * ktoc(val) + 32.0)
 
 def ktoc(val):
-  return (val - 27315) / 100.0
+  return (val - 27315) / 100
 
 def kelvinToCelcius(val):
   return (val - 27315)

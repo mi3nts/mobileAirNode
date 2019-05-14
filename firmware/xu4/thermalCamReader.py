@@ -88,6 +88,7 @@ def main():
 
                 if((time.time()-startTime)>10):
                     startTime = time.time()
+                    print(dataKelvin)
                     dataCelcius           = ktoc(dataKelvin)
                     print(dataCelcius)
                     dataCelciusMultiplied = kelvinToCelcius(dataKelvin)
