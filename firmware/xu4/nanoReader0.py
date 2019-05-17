@@ -24,17 +24,27 @@ def main():
         line = []
 
         while True:
-            for c in ser.read():
-                line.append(chr(c))
-                if chr(c) == '~':
-                    dataString     = (''.join(line))
-                    dataStringPost = dataString.replace('~', '')
-                    print(dataStringPost)
-                    mSR.dataSplit(dataStringPost,datetime.datetime.now())
-                    line = []
-                    break
+            try:
+                for c in ser.read():
+                    line.append(chr(c))
+                    if chr(c) == '~':
+                        dataString     = (''.join(line))
+                        dataStringPost = dataString.replace('~', '')
+                        print(dataStringPost)
+                        mSR.dataSplit(dataStringPost,datetime.datetime.now())
+                        line = []
+                        break
+            except:
+                print("Incomplete String Read")
+                line = []
 
         ser.close()
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
