@@ -364,8 +364,9 @@ def OPCN2Write(sensorData,dateTime):
 def OPCN3Write(sensorData,dateTime):
     dataOut    = sensorData.split(':')
     sensorName = "OPCN3"
+    valid      = dataOut[0]
     dataLength=43
-    if(len(dataOut) == (dataLength +1)):
+    if((len(dataOut) == (dataLength +1)) and valid =="1"):
         sensorDictionary = OrderedDict([
                 ("dateTime"    ,str(dateTime)),
         		("valid"       ,dataOut[0]),
