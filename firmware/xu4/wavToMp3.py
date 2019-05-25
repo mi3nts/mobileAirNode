@@ -10,7 +10,7 @@ from os.path import isfile, join
 #
 dataFolder    = mD.dataFolder
 macAddress    = mD.macAddress
-minutesBefore = 2
+minutesBefore = 3
 
 def main():
 
@@ -48,7 +48,7 @@ def getConvertPath(minutesBefore):
     # # directory = os.listdir(convertPathWav)
     allFiles    = []
     allWavPaths = []
-
+    print(fileName)
     for file in os.listdir(wavFolder):
         if file.endswith(".wav") and (file.find(fileName)== 0):
             wavPath =  wavFolder + str(file)
