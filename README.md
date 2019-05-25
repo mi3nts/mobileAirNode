@@ -13,3 +13,10 @@
 | Gnd         | gnd       | GND      | 6       |   Orange Stripe     |
 | SCL         | A5        |          |         |  Brown Spots     |
 | SDA         | A4        |          |         | BrownStripe      |
+
+- crontab 
+~~~*/1 * * * * cd /home/teamlary/gitHubRepos/Lakitha/mobileAirNode/firmware/xu4 && python3 wavToMp3.py 
+~~~
+
+- udev rule 
+```SUBSYSTEMS=="usb", ATTRS{idVendor}=="08bb", ATTRS{idProduct}=="2902", GROUP="users", MODE="0666"```
