@@ -49,17 +49,12 @@ def getConvertPath(minutesBefore):
     allFiles    = []
     allWavPaths = []
 
-    # print(fileName)
-    f = open("HelloNow.txt","w+")
-    f.write(str(datetime.datetime.now())+str(minutesBefore))
-    f.close()
-
     for file in os.listdir(wavFolder):
         if file.endswith(".wav") and (file.find(fileName)== 0):
             wavPath =  wavFolder + str(file)
             allWavPaths.append(wavPath)
 
-            wavExist = len(allWavPaths)>0
+    wavExist = len(allWavPaths)>0
 
 
     return allWavPaths,wavExist;
