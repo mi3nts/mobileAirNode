@@ -85,7 +85,7 @@ def getWritePathAudio(labelIn,dateTime):
     writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + \
     "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+  \
     "/audioSnaps/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + \
-    str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2)+\
+    str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2)+ "_" + \
     str(dateTime.hour).zfill(2) + "_" +str(dateTime.minute).zfill(2) + "_" +str(dateTime.second).zfill(2)\
      +".wav"
     return writePath;
@@ -107,7 +107,7 @@ def getWritePathThermal(labelIn,dateTime):
     writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + \
     "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+  \
     "/thermalSnaps/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + \
-    str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2)+\
+    str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2)+  "_" + \
     str(dateTime.hour).zfill(2) + "_" +str(dateTime.minute).zfill(2) + "_" +str(dateTime.second).zfill(2)\
      +".mat"
 

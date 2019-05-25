@@ -26,7 +26,7 @@ void loop() {
 
     if(PPD42NSOnline)
         {
-          readPPD42NSDuoMints(30);
+          readPPD42NSDuoMints(10);
         }
 
   }

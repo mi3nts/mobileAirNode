@@ -25,6 +25,6 @@ def getDeletePath(daysBefore):
     print(deletePath)
     return deletePath;
 
-
+.
 if __name__ == '__main__':
   main()

@@ -14,3 +14,6 @@ sleep 5
 python3 ipReader.py &
 sleep 10
 cd odroidShow2 && python3 mintsShow2.py
+
+
+#@reboot cd /home/teamlary/gitHubRepos/Lakitha/UTDNodes/firmware/xu4 && ./runAll.sh
