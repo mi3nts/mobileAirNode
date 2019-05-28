@@ -43,32 +43,34 @@ def main():
     keep_going = True
 
     # plt.show()
-    stream.start_stream()
+
 
     startTimeWav = time.time()
     startTimePS  = time.time()
     audioDataWav  = []
     dateTimeWav = datetime.datetime.now()
+    xf = np.linspace(0.0, 1.0/(2.0*INTERVAL), CHUNK//2)
 
     while keep_going:
         try:
+            stream.start_stream()
             audioDataNow  = stream.read(CHUNK)
             audioDataWav.append(audioDataNow)
-
+            stream.stop_stream()
             if(time.time()-startTimePS>powerSpectrumWritePeriod ):
                 yf  = fft(np.fromstring(audioDataNow, np.int16))
                 powerSpectrum = 2.0/CHUNK * np.abs(yf[0:CHUNK//2])
                 mSR.MI305Write(powerSpectrum,datetime.datetime.now())
                 startTimePS = time.time()
-	            maxInd = np.argmax(yf)
-                print(powerSpectrum[maxInd])
+                maxInd = np.argmax(powerSpectrum)
+                print(xf[maxInd])
+
 
             if(time.time()-startTimeWav> wavWritePeriod):
                 mSR.sensorFinisherAudio(dateTimeWav,"MI305",audioDataWav,CHANNELS,FORMAT,RATE,audio)
                 audioDataWav  = []
                 startTimeWav  = time.time()
                 dateTimeWav   =  datetime.datetime.now()
-
 
 
         except KeyboardInterrupt:
