@@ -60,6 +60,8 @@ def main():
                 powerSpectrum = 2.0/CHUNK * np.abs(yf[0:CHUNK//2])
                 mSR.MI305Write(powerSpectrum,datetime.datetime.now())
                 startTimePS = time.time()
+	            maxInd = np.argmax(yf)
+                print(powerSpectrum[maxInd])
 
             if(time.time()-startTimeWav> wavWritePeriod):
                 mSR.sensorFinisherAudio(dateTimeWav,"MI305",audioDataWav,CHANNELS,FORMAT,RATE,audio)
