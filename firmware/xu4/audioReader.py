@@ -18,7 +18,7 @@ dataFolder   = mD.dataFolder
 nanoPorts    = mD.nanoPorts
 
 
-powerSpectrumWritePeriod = 3
+powerSpectrumWritePeriod = 1
 wavWritePeriod           = 60
 
 
@@ -50,13 +50,13 @@ def main():
     audioDataWav  = []
     dateTimeWav = datetime.datetime.now()
     xf = np.linspace(0.0, 1.0/(2.0*INTERVAL), CHUNK//2)
-
+    stream.start_stream()
     while keep_going:
         try:
-            stream.start_stream()
+
             audioDataNow  = stream.read(CHUNK)
             audioDataWav.append(audioDataNow)
-            stream.stop_stream()
+
             if(time.time()-startTimePS>powerSpectrumWritePeriod ):
                 yf  = fft(np.fromstring(audioDataNow, np.int16))
                 powerSpectrum = 2.0/CHUNK * np.abs(yf[0:CHUNK//2])
@@ -64,7 +64,6 @@ def main():
                 startTimePS = time.time()
                 maxInd = np.argmax(powerSpectrum)
                 print(xf[maxInd])
-
 
             if(time.time()-startTimeWav> wavWritePeriod):
                 mSR.sensorFinisherAudio(dateTimeWav,"MI305",audioDataWav,CHANNELS,FORMAT,RATE,audio)

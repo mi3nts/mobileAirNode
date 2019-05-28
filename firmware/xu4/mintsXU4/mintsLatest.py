@@ -37,7 +37,7 @@ def readJSONLatestAll(sensorName):
         directoryIn  = dataFolder+"/"+macAddress+"/"+sensorName+".json"
         with open(directoryIn, 'r') as myfile:
             # dataRead=myfile.read()
-            dataRead=OrderedDict(json.load(myfile))
+            dataRead=json.load(myfile)
 
         time.sleep(0.01)
         return dataRead, True
