@@ -192,7 +192,7 @@ def MGS001Write(sensorData,dateTime):
         		("c4h10"      ,dataOut[4]),
             	("ch4"        ,dataOut[5]),
                 ("h2"         ,dataOut[6]),
-            	("c2h5oh  "   ,dataOut[7]),
+            	("c2h5oh"     ,dataOut[7]),
                 ])
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
