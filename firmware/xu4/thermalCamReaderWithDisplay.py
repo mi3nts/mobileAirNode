@@ -81,9 +81,11 @@ def main():
                 dataKelvin            = cv2.resize(data[:,:], (640, 480))
                 minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(dataKelvin)
                 img = raw_to_8bit(dataKelvin)
-                displayTemperatureInCelcius(img, minVal, minLoc, (255, 0, 0))
-                displayTemperatureInCelcius(img, maxVal, maxLoc, (0, 0, 255))
-                cv2.imshow('MINTS Thermal', img)
+                imgProcessed  =cv2.applyColorMap(img, cv2.COLORMAP_JET)
+                displayTemperatureInCelcius(imgProcessed, minVal, minLoc, (0, 0, 0))
+                displayTemperatureInCelcius(imgProcessed, maxVal, maxLoc, (255, 255, 255))
+
+                cv2.imshow('MINTS Thermal',imgProcessed)
                 cv2.waitKey(1)
 
                 if((time.time()-startTime)>10):
@@ -98,8 +100,8 @@ def main():
                         ("minTempLocX"     ,minLoc[0]),
                         ("minTempLocY"     ,minLoc[1])
                         ])
-                    mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
-                    mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelciusMultiplied)
+                    mSR.sensorFinisherSummaryOnly(dateTime,"FLIR001",sensorDictionary)
+                    mSR.sensorFinisherThermal(dateTime,"FLIR001",dataCelciusMultiplied)
                     print(" ")
                     print("============== MINTS Thermal ==============")
                     print(" ")

@@ -13,8 +13,8 @@ except ImportError:
   from Queue import Queue
 import platform
 
-libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/build/libuvc.so") # For Odroid XU4
-# libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/src/libuvc.so") # For PC
+# libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/build/libuvc.so") # For Odroid XU4
+libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/src/libuvc.so") # For PC
 
 BUF_SIZE = 2
 q = Queue(BUF_SIZE)
@@ -308,7 +308,7 @@ def raw_to_8bit(data):
 
 def display_temperature(img, val_k, loc, color):
   val = ktof(val_k)
-  cv2.putText(img,"{0:.1f} degF".format(val), loc, cv2.FONT_HERSHEY_SIMPLEX, 0.75, color, 2)
+  cv2.putText(img,"{0:.1f} degF".format(val), loc, cv2.FONT_HERSHEY_COMPLEX, 0.75, color, 2)
   x, y = loc
   cv2.line(img, (x - 2, y), (x + 2, y), color, 1)
   cv2.line(img, (x, y - 2), (x, y + 2), color, 1)
@@ -316,7 +316,7 @@ def display_temperature(img, val_k, loc, color):
 
 def displayTemperatureInCelcius(img, val_k, loc, color):
   val = ktoc(val_k)
-  cv2.putText(img,"{0:.1f} C".format(val), loc, cv2.FONT_HERSHEY_SIMPLEX, 0.75, color, 2)
+  cv2.putText(img,"{0:.1f} C".format(val), loc, cv2.FONT_HERSHEY_COMPLEX, 0.75, color, 2)
   x, y = loc
   cv2.line(img, (x - 2, y), (x + 2, y), color, 1)
   cv2.line(img, (x, y - 2), (x, y + 2), color, 1)

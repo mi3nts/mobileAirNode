@@ -98,8 +98,8 @@ def main():
                         ("minTempLocX"     ,minLoc[0]),
                         ("minTempLocY"     ,minLoc[1])
                         ])
-                    mSR.sensorFinisher(dateTime,"FLIR001",sensorDictionary)
-                    mSR.sensorFinisherThermal(dateTime,"FLIR001",sensorDictionary,dataCelciusMultiplied)
+                    mSR.sensorFinisherSummaryOnly(dateTime,"FLIR001",sensorDictionary)
+                    mSR.sensorFinisherThermal(dateTime,"FLIR001",dataCelciusMultiplied)
                     print(" ")
                     print("============== MINTS Thermal ==============")
                     print(" ")

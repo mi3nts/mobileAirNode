@@ -41,8 +41,8 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print(writePath)
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
-    if(latestDisplayOn):
-       mL.writeJSONLatest(sensorDictionary,sensorName)
+    mL.streamJSONLatest(sensorDictionary,sensorName)
+    mL.writeJSONLatest(sensorDictionary,sensorName)
 
     print("-----------------------------------")
     print(sensorName)
@@ -91,15 +91,31 @@ def getWritePathAudio(labelIn,dateTime):
     return writePath;
 
 
+def sensorFinisherSummaryOnly(dateTime,sensorName,sensorDictionary):
+    #Getting Write Path
+    writePath = getWritePath(sensorName,dateTime)
+    print(writePath)
+    exists = directoryCheck(writePath)
+    writeCSV2(writePath,sensorDictionary,exists)
+    mL.writeJSONLatest(sensorDictionary,sensorName)
 
+    print("-----------------------------------")
+    print(sensorName)
 
-
-def sensorFinisherThermal(dateTime,sensorName,sensorDictionary,dataCelcius):
+def sensorFinisherThermal(dateTime,sensorName,dataCelcius):
     writePath = getWritePathThermal(sensorName,dateTime)
     exists = directoryCheck(writePath)
+
     flir001 = {}
     flir001['thermalImage'] = dataCelcius
     hdf5storage.write(flir001, '.', writePath, store_python_metadata=False, matlab_compatible=True)
+
+    sensorDictionary =  OrderedDict([
+                ("dateTime"     , str(dateTime)),\
+                ("thermalImage"  , dataCelcius.tolist())\
+                ])
+    mL.streamJSONLatest(sensorDictionary,sensorName)
+
 
 
 def getWritePathThermal(labelIn,dateTime):
@@ -307,6 +323,7 @@ def MI305Write(dataOut,dateTime):
                  ("amplitudes" ,dataOut)
                  ])
         # print(sensorDictionary)
+
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
 

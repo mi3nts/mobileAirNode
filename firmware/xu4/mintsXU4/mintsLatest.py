@@ -9,28 +9,64 @@ import csv
 import deepdish as dd
 import time
 import json
-
+import numpy as np
 from mintsXU4 import mintsDefinitions as mD
+import requests
+import json
+import datetime
 
-dataFolder = mD.dataFolder
-macAddress = mD.macAddress
-#
-# def writeHDF5Latest(writePath,sensorDictionary,sensorName):
-#     try:
-#         dd.io.save(dataFolder+sensorName+".h5", sensorDictionary)
-#     except:
-#         print("Data Conflict!")
+
+
+dataFolder          = mD.dataFolder
+macAddress          = mD.macAddress
+latestDisplayOn     = mD.latestDisplayOn
+streamURL           = mD.streamURL
+streamOn            = mD.streamON
+
+def streamJSONLatest(sensorDictionary,sensorName):
+    if(streamOn):
+        try:
+            sensorDictionary['nodeID']     = macAddress
+            sensorDictionary['sensorID']   = sensorName
+
+            # if(len(str(sensorDictionary))>1000):
+            #     print("Data Too Large, Data Length: "+ str(len(str(sensorDictionary))))
+            #     dateTime = sensorDictionary['dateTime']
+            #     sensorDictionary.clear()
+            #     sensorDictionary['dateTime'] = str(dateTime)
+            #     sensorDictionary['nodeID']   = macAddress
+            #     sensorDictionary['sensorID'] = sensorName
+            print("-----------------")
+            print(sensorDictionary)
+            print("-----------------")
+            if(len(str(sensorDictionary))>1000):
+                print("Data Too Large, Data Length: "+ str(len(str(sensorDictionary))))
+                dateTime = sensorDictionary['dateTime']
+                sensorDictionary.clear()
+                sensorDictionary['dateTime'] = str(dateTime)
+                sensorDictionary['nodeID']   = macAddress
+                sensorDictionary['sensorID'] = sensorName
+
+            print(sensorDictionary)
+            r = requests.post(url =mD.streamURL,\
+                                  json=sensorDictionary,\
+                                  auth=('algolook', 'safeai123'))
+            print("Status Code:" + str(r.status_code))
+        except Exception as e:
+            print(e)
+            print("Data Not Streamed")
 
 
 def writeJSONLatest(sensorDictionary,sensorName):
     # print(writePath)
-    directoryIn  = dataFolder+"/"+macAddress+"/"+sensorName+".json"
-    # print(directoryIn)
-    try:
-    	with open(directoryIn,'w') as fp:
-    	    json.dump(sensorDictionary, fp)
-    except:
-        print("Data Conflict!")
+    if(latestDisplayOn):
+        directoryIn  = dataFolder+"/"+macAddress+"/"+sensorName+".json"
+        # print(directoryIn)
+        try:
+        	with open(directoryIn,'w') as fp:
+        	    json.dump(sensorDictionary, fp)
+        except:
+            print("Data Conflict!")
 
 def readJSONLatestAll(sensorName):
     try:
@@ -44,29 +80,3 @@ def readJSONLatestAll(sensorName):
     except:
         print("Data Conflict!")
         return "NaN", False
-
-
-#
-# def readHDF5LatestAll(sensorName):
-#     try:
-#         d = dd.io.load(dataFolder+sensorName+".h5")
-#         # print("-------------------------------------")
-#         # # print(sensorName)
-#         # # print(d)
-#         time.sleep(0.01)
-#         return d, True
-#     except:
-#         print("Data Conflict!")
-#         return "NaN", False
-#
-# def readHDF5LatestData(sensorName,keyIn):
-#     try:
-#         d = dd.io.load(dataFolder+sensorName+".h5")
-#         # print("-------------------------------------")
-#         # print(sensorName)
-#         # print(d[keyIn])
-#         time.sleep(0.01)
-#         return str(d[keyIn]),True
-#     except:
-#         print("Data Conflict!")
-#         return {}, False

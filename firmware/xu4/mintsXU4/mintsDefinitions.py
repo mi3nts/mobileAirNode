@@ -44,23 +44,27 @@ def findMacAddress():
     return "xxxxxxxx"
 
 
-
 dataFolder            = "/home/teamlary/mintsData/raw"
 duePort               = findDuePort()
 nanoPorts             = findNanoPorts()
 show2Port             = findPort("CP2104 USB to UART Bridge Controller")
 
 # macAddress            = get_mac_address(interface="docker0").replace(":","")  #LAB Machine
-# macAddress          = get_mac_address(interface="enp1s0").replace(":","")
+# macAddress            = get_mac_address(interface="enp1s0").replace(":","")
 # macAddress            = get_mac_address(interface="eth0").replace(":","") # XU4
+
 macAddress            = findMacAddress()
-
-
-
-
+streamURL             = "http://40.71.191.73:8080/api/v1/sensor/record"
+streamON              = True
 
 latestDisplayOn     = True
 gpsPort               = findPort("GPS/GNSS Receiver")
+
+
+
+
+
+
 
 
 # print(length(findNansPorts))
