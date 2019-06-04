@@ -13,8 +13,8 @@ except ImportError:
   from Queue import Queue
 import platform
 
-# libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/build/libuvc.so") # For Odroid XU4
-libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/src/libuvc.so") # For PC
+libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/build/libuvc.so") # For Odroid XU4
+# libuvc = cdll.LoadLibrary("/home/teamlary/libuvc/src/libuvc.so") # For PC
 
 BUF_SIZE = 2
 q = Queue(BUF_SIZE)

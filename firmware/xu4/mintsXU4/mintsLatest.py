@@ -29,17 +29,9 @@ def streamJSONLatest(sensorDictionary,sensorName):
             sensorDictionary['nodeID']     = macAddress
             sensorDictionary['sensorID']   = sensorName
 
-            # if(len(str(sensorDictionary))>1000):
-            #     print("Data Too Large, Data Length: "+ str(len(str(sensorDictionary))))
-            #     dateTime = sensorDictionary['dateTime']
-            #     sensorDictionary.clear()
-            #     sensorDictionary['dateTime'] = str(dateTime)
-            #     sensorDictionary['nodeID']   = macAddress
-            #     sensorDictionary['sensorID'] = sensorName
             print("-----------------")
-            print(sensorDictionary)
-            print("-----------------")
-            if(len(str(sensorDictionary))>1000):
+          
+            if(len(str(sensorDictionary))>64000):
                 print("Data Too Large, Data Length: "+ str(len(str(sensorDictionary))))
                 dateTime = sensorDictionary['dateTime']
                 sensorDictionary.clear()
@@ -47,7 +39,7 @@ def streamJSONLatest(sensorDictionary,sensorName):
                 sensorDictionary['nodeID']   = macAddress
                 sensorDictionary['sensorID'] = sensorName
 
-            print(sensorDictionary)
+
             r = requests.post(url =mD.streamURL,\
                                   json=sensorDictionary,\
                                   auth=('algolook', 'safeai123'))
