@@ -44,7 +44,9 @@ def findMacAddress():
     return "xxxxxxxx"
 
 
-dataFolder            = "/home/teamlary/mintsData/raw"
+# dataFolder            = "/home/teamlary/mintsData/raw"
+dataFolder            = "/home/teamlary/algolookData/raw"
+dataFolderUnplublished= "/home/teamlary/algolookDataUnpublished/raw"
 duePort               = findDuePort()
 nanoPorts             = findNanoPorts()
 show2Port             = findPort("CP2104 USB to UART Bridge Controller")
