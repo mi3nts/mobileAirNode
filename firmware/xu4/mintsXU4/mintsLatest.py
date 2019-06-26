@@ -17,11 +17,12 @@ import datetime
 
 
 
-dataFolder          = mD.dataFolder
-macAddress          = mD.macAddress
-latestDisplayOn     = mD.latestDisplayOn
-streamURL           = mD.streamURL
-streamOn            = mD.streamON
+dataFolder           = mD.dataFolder
+dataFolderUnpublished= mD.dataFolderUnplublished
+macAddress           = mD.macAddress
+latestDisplayOn      = mD.latestDisplayOn
+streamURL            = mD.streamURL
+streamOn             = mD.streamON
 
 def streamJSONLatest(sensorDictionary,sensorName):
     if(streamOn):
@@ -30,7 +31,7 @@ def streamJSONLatest(sensorDictionary,sensorName):
             sensorDictionary['sensorID']   = sensorName
 
             print("-----------------")
-          
+
             if(len(str(sensorDictionary))>64000):
                 print("Data Too Large, Data Length: "+ str(len(str(sensorDictionary))))
                 dateTime = sensorDictionary['dateTime']
@@ -59,6 +60,18 @@ def writeJSONLatest(sensorDictionary,sensorName):
         	    json.dump(sensorDictionary, fp)
         except:
             print("Data Conflict!")
+
+def writeJSONLatestUnpublished(sensorDictionary,sensorName):
+    # print(writePath)
+    if(latestDisplayOn):
+        directoryIn  = dataFolderUnpublished+"/"+macAddress+"/"+sensorName+".json"
+        # print(directoryIn)
+        try:
+        	with open(directoryIn,'w') as fp:
+        	    json.dump(sensorDictionary, fp)
+        except:
+            print("Data Conflict!")
+
 
 def readJSONLatestAll(sensorName):
     try:

@@ -31,9 +31,23 @@ import netifaces as ni
 from scipy.io import savemat
 import wave
 
-macAddress        = mD.macAddress
-dataFolder        = mD.dataFolder
-latestDisplayOn   = mD.latestDisplayOn
+macAddress              = mD.macAddress
+dataFolder              = mD.dataFolder
+dataFolderUnplublished  = mD.dataFolderUnplublished
+latestDisplayOn         = mD.latestDisplayOn
+
+def sensorFinisherUnpublished(dateTime,sensorName,sensorDictionary):
+    #Getting Write Path
+    writePath = getWritePath(sensorName,dateTime)
+    print(writePath)
+    exists = directoryCheck(writePath)
+    writeCSV2(writePath,sensorDictionary,exists)
+    # mL.streamJSONLatest(sensorDictionary,sensorName)
+    mL.writeJSONLatestUnpublished(sensorDictionary,sensorName)
+
+    print("-----------------------------------")
+    print(sensorName)
+    # print(sensorDictionary)
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
     #Getting Write Path
@@ -324,7 +338,7 @@ def MI305Write(dataOut,dateTime):
                  ])
         # print(sensorDictionary)
 
-        sensorFinisher(dateTime,sensorName,sensorDictionary)
+        sensorFinisherUnpublished(dateTime,sensorName,sensorDictionary)
 
 
 
