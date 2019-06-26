@@ -27,7 +27,7 @@ streamOn             = mD.streamON
 def streamJSONLatest(sensorDictionary,sensorName):
     if(streamOn):
         try:
-            sendURL = streamURL +"/"+sensorName + "/"+ macAddress
+            sendURL = streamURL +"/"+sensorName
             print(sendURL)
             sensorDictionary['nodeID']     = macAddress
             sensorDictionary['sensorID']   = sensorName
