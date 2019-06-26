@@ -27,6 +27,8 @@ streamOn             = mD.streamON
 def streamJSONLatest(sensorDictionary,sensorName):
     if(streamOn):
         try:
+	    sendURL = streamURL +"/"+sendName + "/"+ macAddress
+	    print(sendURL)
             sensorDictionary['nodeID']     = macAddress
             sensorDictionary['sensorID']   = sensorName
 
@@ -39,9 +41,10 @@ def streamJSONLatest(sensorDictionary,sensorName):
                 sensorDictionary['dateTime'] = str(dateTime)
                 sensorDictionary['nodeID']   = macAddress
                 sensorDictionary['sensorID'] = sensorName
-
-
-            r = requests.post(url =mD.streamURL,\
+			
+			
+	
+            r = requests.post(url =sendURL,\
                                   json=sensorDictionary,\
                                   auth=('algolook', 'safeai123'))
             print("Status Code:" + str(r.status_code))

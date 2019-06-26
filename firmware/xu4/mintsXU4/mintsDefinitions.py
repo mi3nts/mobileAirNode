@@ -56,7 +56,7 @@ show2Port             = findPort("CP2104 USB to UART Bridge Controller")
 # macAddress            = get_mac_address(interface="eth0").replace(":","") # XU4
 
 macAddress            = findMacAddress()
-streamURL             = "http://40.71.191.73:8080/api/v1/sensor/record"
+streamURL             = "http://13.90.20.116:8080/api/v1/sensor/record"
 streamON              = True
 
 latestDisplayOn     = True
