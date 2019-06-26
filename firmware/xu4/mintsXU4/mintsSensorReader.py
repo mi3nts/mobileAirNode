@@ -33,15 +33,15 @@ import wave
 
 macAddress              = mD.macAddress
 dataFolder              = mD.dataFolder
-dataFolderUnplublished  = mD.dataFolderUnplublished
+dataFolderUnpublished   = mD.dataFolderUnplublished
 latestDisplayOn         = mD.latestDisplayOn
 
 def sensorFinisherUnpublished(dateTime,sensorName,sensorDictionary):
     #Getting Write Path
-    writePath = getWritePath(sensorName,dateTime)
+    writePath = getWritePathUnpublished(sensorName,dateTime)
     print(writePath)
     exists = directoryCheck(writePath)
-    writeCSV2(writePath,sensorDictionary,exists)
+    # writeCSV2(writePath,sensorDictionary,exists)
     # mL.streamJSONLatest(sensorDictionary,sensorName)
     mL.writeJSONLatestUnpublished(sensorDictionary,sensorName)
 
@@ -1139,6 +1139,11 @@ def getWritePathSnaps(labelIn,dateTime):
 def getWritePath(labelIn,dateTime):
     #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
     writePath = dataFolder+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+"/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2) +".csv"
+    return writePath;
+
+def getWritePathUnpublished(labelIn,dateTime):
+    #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
+    writePath = dataFolderUnpublished+"/"+macAddress+"/"+str(dateTime.year).zfill(4)  + "/" + str(dateTime.month).zfill(2)+ "/"+str(dateTime.day).zfill(2)+"/"+ "MINTS_"+ macAddress+ "_" +labelIn + "_" + str(dateTime.year).zfill(4) + "_" +str(dateTime.month).zfill(2) + "_" +str(dateTime.day).zfill(2) +".csv"
     return writePath;
 
 

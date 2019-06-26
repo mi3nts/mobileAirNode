@@ -65,11 +65,11 @@ def main():
                 maxInd = np.argmax(powerSpectrum)
                 print(xf[maxInd])
 
-            if(time.time()-startTimeWav> wavWritePeriod):
-                mSR.sensorFinisherAudio(dateTimeWav,"MI305",audioDataWav,CHANNELS,FORMAT,RATE,audio)
-                audioDataWav  = []
-                startTimeWav  = time.time()
-                dateTimeWav   =  datetime.datetime.now()
+#            if(time.time()-startTimeWav> wavWritePeriod):
+#                mSR.sensorFinisherAudio(dateTimeWav,"MI305",audioDataWav,CHANNELS,FORMAT,RATE,audio)
+#                audioDataWav  = []
+#                startTimeWav  = time.time()
+#                dateTimeWav   =  datetime.datetime.now()
 
 
         except KeyboardInterrupt:
