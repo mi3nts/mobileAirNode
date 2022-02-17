@@ -41,6 +41,7 @@
   
   - Otter C1+: 192.168.1.220 
   - Arial Vehicle C1+: 192.168.1.221
-  - Drone Jetson: 192.168.1.222
-  - Walking Robot: 192.168.1.223
+  - Walking Robot: 192.168.1.222
+  - Drone Jetson: 192.168.1.223
+  
   
